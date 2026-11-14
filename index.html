@@ -20,6 +20,8 @@
   html,body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;overscroll-behavior:none;touch-action:manipulation}
   body{min-height:100vh;min-height:100dvh;padding-top:var(--sat);padding-bottom:var(--sab)}
   .hide{display:none!important}
+  .ingame .sess,.ingame .nav{display:none}
+  @media(max-width:979px){#game .rules{display:none}}
   .console>div{width:100%}
   body{overflow-anchor:none}
   #game,.stage{overflow-x:clip}
@@ -106,19 +108,19 @@
   .side h4{margin:16px 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.5px}
   .side .grid{grid-template-columns:repeat(2,1fr)}
 
-  .felt{position:relative;border-radius:22px 22px 50% 50%/22px 22px 16% 16%;padding:12px 10px 20px;min-height:620px;background:
+  .felt{position:relative;border-radius:22px 22px 50% 50%/22px 22px 16% 16%;padding:10px 10px 14px;min-height:0;background:
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.35'/></svg>"),
       radial-gradient(ellipse at 50% 38%,#1f9157 0%,#0f6b3d 55%,#0a4a2a 100%);
       border:10px solid #5b2d1c;box-shadow:inset 0 0 60px rgba(0,0,0,.5),0 12px 30px rgba(0,0,0,.55),0 0 0 2px #8a4a2b;transform-style:preserve-3d;transform:rotateX(var(--tilt));transform-origin:50% 100%}
   .felt.vipf{background:
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.35'/></svg>"),
       radial-gradient(ellipse at 50% 38%,#7b2fa8 0%,#4a1a7a 55%,#2a0f4d 100%)}
-  .felt .top{display:flex;justify-content:space-between;align-items:flex-start;height:62px}
+  .felt .top{display:flex;justify-content:space-between;align-items:flex-start;height:56px}
   .limits{margin-top:2px;padding:6px 10px;text-align:center;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f3d68a;background:rgba(0,0,0,.45);border:1px solid #c9a24a;border-radius:6px;line-height:1.3}
   .limits b{display:block;font-size:12px;color:#ffe9a8;letter-spacing:.5px}
   .shoe{width:54px;height:40px;border-radius:6px;background:linear-gradient(135deg,#222,#444);border:2px solid #111;position:relative;transform:rotate(-8deg)}
   .shoe::after{content:"";position:absolute;left:6px;right:6px;top:6px;height:14px;background:#fff;border-radius:3px;opacity:.9}
-  .arc{position:absolute;left:0;right:0;top:128px;width:100%;opacity:.5;pointer-events:none}
+  .arc{position:absolute;left:0;right:0;top:152px;width:100%;opacity:.5;pointer-events:none}
   .arc text{fill:#d7f3e2;font-weight:800;letter-spacing:2px}
   .mark{position:absolute;left:0;right:0;bottom:92px;text-align:center;font-weight:900;font-size:22px;letter-spacing:6px;color:rgba(255,255,255,.07);pointer-events:none}
   .area{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
@@ -126,13 +128,13 @@
   .who{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#bfe9d0;opacity:.85}
   .tag{min-width:30px;text-align:center;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:3px 9px;font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}
   .tag:empty{visibility:hidden}
-  .hand{display:flex;justify-content:center;min-height:104px}
-  .hands{display:flex;gap:10px;justify-content:center;align-items:flex-start;min-height:169px}
+  .hand{display:flex;justify-content:center;min-height:80px}
+  .hands{display:flex;gap:10px;justify-content:center;align-items:flex-start;min-height:147px}
   .hw{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 8px;border-radius:14px;border:2px solid transparent;transition:all .2s}
   .hw.act{border-color:rgba(255,200,61,.85);background:rgba(0,0,0,.2)}
   .hst{font-size:11px;font-weight:800;color:#ffe9a8;min-height:14px}
-  .hands.two .hand{min-height:104px}
-  .mid{height:64px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3}
+  .hands.two .hand{min-height:80px}
+  .mid{height:44px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3}
   .banner{font-weight:900;font-size:22px;padding:8px 20px;border-radius:30px;opacity:0;transform:scale(.8);transition:all .25s;box-shadow:0 3px 0 rgba(0,0,0,.28);white-space:nowrap}
   .banner.on{opacity:1;transform:scale(1)}
   .banner.W{background:var(--green);color:#052a1c}.banner.L{background:var(--red);color:#fff}.banner.P{background:#d0cef2;color:#1b1840}
@@ -146,11 +148,11 @@
   .flip{animation:flip .35s ease-out}
   @keyframes flip{from{transform:rotateY(90deg)}to{transform:none}}
 
-  .console{min-height:176px;display:flex;align-items:center;margin-top:10px;background:linear-gradient(#2a2a30,#17171b);border:1px solid #3a3a45;border-radius:14px;padding:12px 10px}
+  .console{min-height:140px;display:flex;align-items:center;margin-top:10px;background:linear-gradient(#2a2a30,#17171b);border:1px solid #3a3a45;border-radius:14px;padding:12px 10px}
   .cap{text-align:center;font-size:13px;color:#e8d9a8;margin:0 0 10px;font-weight:600}
   .grp{display:flex;align-items:flex-end;justify-content:center;gap:14px}
   .rb{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;padding:0;font-size:11px;font-weight:700;color:#e8d9a8;letter-spacing:.5px;text-transform:uppercase}
-  .rb span{width:62px;height:62px;border-radius:50%;border:3px solid #e9b949;display:grid;place-items:center;font-size:24px;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.5),inset 0 0 14px rgba(0,0,0,.35)}
+  .rb span{width:54px;height:54px;border-radius:50%;border:3px solid #e9b949;display:grid;place-items:center;font-size:24px;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.5),inset 0 0 14px rgba(0,0,0,.35)}
   .rb:active span{transform:translateY(2px)}
   .rb.dbl span{background:radial-gradient(circle at 35% 30%,#4d86ff,#123a9e)}
   .rb.hit span{background:radial-gradient(circle at 35% 30%,#3fd17a,#0b6b34)}
@@ -159,8 +161,10 @@
   .rb.go span{background:radial-gradient(circle at 35% 30%,#ffd978,#b9810a);color:#2a1c00}
   .rb.ghost span{background:#33333c;border-color:#666;color:#ddd}
   .rb.off{opacity:.38}
-  .chipsel{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
-  .stats{display:flex;justify-content:space-between;margin-top:12px;padding:9px 14px;background:#0c0c10;border-radius:10px;font-size:12px;color:#c9c5f5;letter-spacing:.8px;text-transform:uppercase;font-variant-numeric:tabular-nums}
+  .chipsel{display:flex;gap:8px;justify-content:center;margin-bottom:8px}
+  #chips .chip{width:50px;height:50px;font-size:14px}
+  #chips .chip::before{inset:6px}
+  .stats{display:flex;justify-content:space-between;margin-top:8px;padding:9px 14px;background:#0c0c10;border-radius:10px;font-size:12px;color:#c9c5f5;letter-spacing:.8px;text-transform:uppercase;font-variant-numeric:tabular-nums}
   .stats b{color:#fff;margin-left:4px}
   .rules{margin-top:12px;text-align:center;font-size:11px;color:var(--mut);line-height:1.5}
 
@@ -230,7 +234,7 @@
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.55) 0 1px,transparent 1px 5px),linear-gradient(90deg,rgba(0,0,0,.4),transparent 28%,rgba(255,255,255,.28) 50%,transparent 72%,rgba(0,0,0,.4)),repeating-linear-gradient(0deg,var(--c) 0 3px,#f2f2f2 3px 4px,var(--c) 4px 5px)}
   .tc::before{content:"";position:absolute;left:-1px;right:-1px;top:-3px;height:7px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.35),transparent 70%),var(--c);box-shadow:0 1px 0 rgba(0,0,0,.4)}
   /* --- speelkaarten --- */
-  .pc{position:relative;flex:none;width:62px;height:92px;margin-right:-34px;border-radius:4px;background-color:transparent;
+  .pc{position:relative;flex:none;width:52px;height:77px;margin-right:-28px;border-radius:4px;background-color:transparent;
     filter:drop-shadow(0 3px 4px rgba(0,0,0,.55))}
   .pc.img{background-image:url(cards.png);background-size:1300% 400%;background-repeat:no-repeat}
   .pc:last-child{margin-right:0}
@@ -238,7 +242,7 @@
   .pc.back{background:#fff}
   .pc.back::before{content:"";position:absolute;inset:4px;border-radius:3px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.22) 0 2px,transparent 2px 7px),repeating-linear-gradient(-45deg,rgba(255,255,255,.22) 0 2px,transparent 2px 7px),linear-gradient(160deg,#2563eb,#102a6b)}
   .pc.back::after{content:"♠";position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.8);font-size:2.2em}
-  .hands.two .pc{width:50px;height:75px;margin-right:-27px}
+  .hands.two .pc{width:44px;height:66px;margin-right:-24px}
   .hands.two .pc:last-child{margin-right:0}
 
   /* --- tafel in schuin vooraanzicht --- */
@@ -252,6 +256,7 @@
   @keyframes cardout{to{transform:translate(160px,-190px) rotate(28deg) scale(.7);opacity:0}}
   .stack.collect .ch{animation:collect .5s ease-in forwards;animation-delay:calc(var(--i)*40ms)}
   @keyframes collect{to{transform:translateY(80px) scale(.8);opacity:0}}
+  @media(max-height:740px){.arc{top:128px}.pc{width:46px;height:68px;margin-right:-25px}.hand{min-height:70px}.hands{min-height:130px}.hands.two .pc{width:40px;height:60px;margin-right:-22px}.hands.two .hand{min-height:64px}.mid{height:38px}.felt .top{height:50px}.console{min-height:120px;padding:8px}#chips .chip{width:42px;height:42px;font-size:13px}#chips .chip::before{inset:5px}.rb span{width:46px;height:46px;font-size:20px}.chipsel{margin-bottom:6px}.stats{margin-top:6px;padding:7px 12px}}
 </style>
 </head>
 <body>
@@ -618,6 +623,7 @@ var E=(function(){
   // ---- views ----
   function view(v){
     $("lobby").classList.toggle("hide",v!=="lobby"); $("game").classList.toggle("hide",v!=="game"); $("roul").classList.toggle("hide",v!=="roul");
+    document.body.classList.toggle("ingame",v!=="lobby");
     window.scrollTo(0,0); if(v==="game"){renderBet();keepAwake();} if(v==="roul"){renderRoul();keepAwake();}
   }
   async function enterGame(which){
