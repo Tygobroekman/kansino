@@ -171,6 +171,7 @@
   .modal h1{margin:6px 0 8px;font-size:26px}
   .modal p{color:#cfcbff;line-height:1.5;margin:6px 0 16px}
   .mbtn{width:100%;border:0;border-radius:12px;padding:14px;font-weight:800;font-size:16px;background:linear-gradient(180deg,#ffd978,var(--gold));color:#2a1c00;box-shadow:0 4px 0 #9a6f00}
+  .mclose{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:16px;font-weight:700}
   .big{font-size:60px;font-weight:900;color:var(--gold);margin:4px 0;text-shadow:0 0 24px rgba(255,200,61,.5)}
   .ticket{margin-top:14px;padding:14px;border:2px dashed var(--gold);border-radius:14px;color:var(--gold);line-height:1.5;font-size:14px}
   canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:195}
@@ -320,13 +321,15 @@
 <div class="toast" id="toast"></div>
 
 <div class="overlay hide" id="final">
-  <div class="modal">
+  <div class="modal" style="position:relative">
+    <button class="mclose" id="fClose" aria-label="Sluiten">✕</button>
     <div style="font-size:46px">🎉</div>
     <h1 id="fTitle">Gefeliciteerd!</h1>
     <div class="big" id="fAmt">€ 120</div>
     <p id="fText"></p>
     <button class="mbtn" id="cash">Uitbetalen</button>
     <div class="ticket hide" id="ticket"></div>
+    <button class="mbtn hide" id="fDone" style="margin-top:14px;background:#2d2776;color:#fff;box-shadow:0 4px 0 #1a154d">Sluiten</button>
   </div>
 </div>
 <canvas id="confetti"></canvas>
@@ -741,7 +744,9 @@ var E=(function(){
     $("ticket").innerHTML="🧾 <b>UITBETALINGSBON</b><br>€ "+CFG.doel+" contant<br>Kom je cadeau ophalen bij de kassa (jouw vrienden).";
     $("final").classList.remove("hide"); sfx.big(); boom(); setTimeout(boom,1200); setTimeout(boom,2400);
   }
-  $("cash").onclick=function(){ $("ticket").classList.remove("hide"); $("cash").classList.add("hide"); sfx.win(); boom(); };
+  $("cash").onclick=function(){ $("ticket").classList.remove("hide"); $("cash").classList.add("hide"); $("fDone").classList.remove("hide"); sfx.win(); boom(); };
+  function closeFinal(){ $("final").classList.add("hide"); view("lobby"); }
+  $("fClose").onclick=closeFinal; $("fDone").onclick=closeFinal;
 
   // ---- confetti ----
   var cf=$("confetti"), cc=cf.getContext("2d"), parts=[], running=false;
