@@ -110,8 +110,6 @@
       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.35'/></svg>"),
       radial-gradient(ellipse at 50% 38%,#7b2fa8 0%,#4a1a7a 55%,#2a0f4d 100%)}
   .felt .top{display:flex;justify-content:space-between;align-items:flex-start;height:62px}
-  .tray{display:flex;gap:3px;padding:6px 8px;background:linear-gradient(#7a4b2a,#4a2a16);border-radius:6px 6px 14px 14px;border:2px solid #2e1809}
-  .tc{width:12px;height:42px;border-radius:6px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.55) 0 2px,transparent 2px 6px),var(--c);border:1px solid rgba(0,0,0,.4)}
   .limits{margin-top:2px;padding:6px 10px;text-align:center;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f3d68a;background:rgba(0,0,0,.45);border:1px solid #c9a24a;border-radius:6px;line-height:1.3}
   .limits b{display:block;font-size:12px;color:#ffe9a8;letter-spacing:.5px}
   .shoe{width:54px;height:40px;border-radius:6px;background:linear-gradient(135deg,#222,#444);border:2px solid #111;position:relative;transform:rotate(-8deg)}
@@ -124,13 +122,11 @@
   .who{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#bfe9d0;opacity:.85}
   .tag{min-width:30px;text-align:center;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:3px 9px;font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}
   .tag:empty{visibility:hidden}
-  .hand{display:flex;justify-content:center;min-height:104px;padding-left:12px}
+  .hand{display:flex;justify-content:center;min-height:104px}
   .hands{display:flex;gap:10px;justify-content:center;align-items:flex-start}
   .hw{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 8px;border-radius:14px;border:2px solid transparent;transition:all .2s}
   .hw.act{border-color:rgba(255,200,61,.85);background:rgba(0,0,0,.2)}
   .hst{font-size:11px;font-weight:800;color:#ffe9a8;min-height:14px}
-  .hands.two .pc{width:50px;height:74px;margin-right:-18px;font-size:20px}
-  .hands.two .pc .st{font-size:20px}
   .hands.two .hand{min-height:80px}
   .mid{height:64px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3}
   .banner{font-weight:900;font-size:22px;padding:8px 20px;border-radius:30px;opacity:0;transform:scale(.8);transition:all .25s;box-shadow:0 6px 20px rgba(0,0,0,.45);white-space:nowrap}
@@ -138,15 +134,9 @@
   .banner.W{background:var(--green);color:#052a1c}.banner.L{background:var(--red);color:#fff}.banner.P{background:#d0cef2;color:#1b1840}
   .spot{position:relative;width:120px;height:62px;border:2px solid rgba(255,255,255,.35);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-top:2px;transform:perspective(200px) rotateX(18deg)}
   .spot .amt{position:absolute;right:6px;bottom:2px;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000}
-  .stack{position:relative;width:34px;height:34px}
-  .stack .ch{position:absolute;left:0;width:34px;height:34px;border-radius:50%;border:3px dashed rgba(255,255,255,.85);box-shadow:0 2px 0 rgba(0,0,0,.45);animation:chipdrop .25s ease-out both;animation-delay:calc(var(--i)*45ms)}
   .stack.sweep .ch{animation:sweep .75s ease-in forwards;animation-delay:calc(var(--i)*45ms)}
   @keyframes chipdrop{from{transform:translateY(-26px);opacity:0}to{transform:none;opacity:1}}
   @keyframes sweep{to{transform:translateY(-240px) scale(.7);opacity:0}}
-  .pc{position:relative;width:62px;height:90px;margin-right:-16px;border-radius:9px;background:#fff;color:#16132e;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:25px;box-shadow:0 4px 10px rgba(0,0,0,.5)}
-  .pc .st{font-size:25px;line-height:1}
-  .pc.red{color:#d6204b}
-  .pc.back{background:repeating-linear-gradient(45deg,#1d4ed8 0 6px,#1e3a8a 6px 12px);border:4px solid #fff}
   .deal{animation:deal .38s cubic-bezier(.2,.8,.3,1)}
   @keyframes deal{from{transform:translate(130px,-150px) rotate(24deg) scale(.8);opacity:0}to{transform:none;opacity:1}}
   .flip{animation:flip .35s ease-out}
@@ -162,13 +152,10 @@
   .rb.hit span{background:radial-gradient(circle at 35% 30%,#3fd17a,#0b6b34)}
   .rb.std span{background:radial-gradient(circle at 35% 30%,#ff5a5a,#8e1111)}
   .rb.spl span{background:radial-gradient(circle at 35% 30%,#a78bfa,#4c1d95)}
-  .rb.deal span{background:radial-gradient(circle at 35% 30%,#ffd978,#b9810a);color:#2a1c00}
+  .rb.go span{background:radial-gradient(circle at 35% 30%,#ffd978,#b9810a);color:#2a1c00}
   .rb.ghost span{background:#33333c;border-color:#666;color:#ddd}
   .rb.off{opacity:.38}
   .chipsel{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
-  .chip{width:54px;height:54px;border-radius:50%;border:4px dashed rgba(255,255,255,.85);font-weight:900;font-size:15px;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.45)}
-  .chip:active{transform:translateY(2px)}.chip[disabled]{opacity:.28}
-  .c5,.ch5{background:#d6204b}.c10,.ch10{background:#2a6fdb}.c25,.ch25{background:#16a34a}.c50,.ch50{background:#111}.c100,.ch100{background:#7c3aed}
   .stats{display:flex;justify-content:space-between;margin-top:12px;padding:9px 14px;background:#0c0c10;border-radius:10px;font-size:12px;color:#c9c5f5;letter-spacing:.8px;text-transform:uppercase;font-variant-numeric:tabular-nums}
   .stats b{color:#fff;margin-left:4px}
   .rules{margin-top:12px;text-align:center;font-size:11px;color:var(--mut);line-height:1.5}
@@ -183,6 +170,51 @@
   .big{font-size:60px;font-weight:900;color:var(--gold);margin:4px 0;text-shadow:0 0 24px rgba(255,200,61,.5)}
   .ticket{margin-top:14px;padding:14px;border:2px dashed var(--gold);border-radius:14px;color:var(--gold);line-height:1.5;font-size:14px}
   canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:195}
+
+  /* --- fiches (bovenaanzicht met randstrepen) --- */
+  .c5,.ch5{--c:#d6204b;--d:#7d0f27}.c10,.ch10{--c:#2a6fdb;--d:#123a86}.c25,.ch25{--c:#16a34a;--d:#0a5a29}.c50,.ch50{--c:#25252c;--d:#0a0a0d}.c100,.ch100{--c:#7c3aed;--d:#3f1590}
+  .chip{position:relative;width:58px;height:58px;padding:0;border:0;border-radius:50%;color:#fff;font-weight:900;font-size:15px;
+    background:repeating-conic-gradient(#f4f4f4 0 11deg,var(--c) 11deg 45deg);
+    box-shadow:0 4px 0 var(--d),0 7px 10px rgba(0,0,0,.45)}
+  .chip::before{content:"";position:absolute;inset:7px;border-radius:50%;background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.28),transparent 55%),var(--c);border:2px solid rgba(255,255,255,.9);box-shadow:inset 0 0 0 3px var(--c),inset 0 0 10px rgba(0,0,0,.4)}
+  .chip span{position:relative;z-index:1;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+  .chip:active{transform:translateY(2px);box-shadow:0 2px 0 var(--d),0 4px 8px rgba(0,0,0,.4)}
+  .chip[disabled]{opacity:.28}
+  /* stapel op de inzetplek (schuin van boven, met dikte) */
+  .stack{position:relative;width:40px;height:44px}
+  .stack .ch{position:absolute;left:0;width:40px;height:22px;border-radius:50%;
+    background:radial-gradient(ellipse at 50% 50%,var(--c) 0 52%,rgba(255,255,255,.92) 53% 58%,var(--c) 59% 66%,transparent 67%),repeating-conic-gradient(#f4f4f4 0 12deg,var(--c) 12deg 45deg);
+    box-shadow:0 3px 0 var(--d),0 4px 0 rgba(0,0,0,.35),0 6px 6px rgba(0,0,0,.3);
+    animation:chipdrop .25s ease-out both;animation-delay:calc(var(--i)*45ms)}
+  /* fichebak: kolommen gestapelde fiches van opzij */
+  .tray{display:flex;align-items:flex-end;gap:3px;height:52px;padding:0 7px 5px;background:linear-gradient(#0c0805,#1b110a);border:2px solid #7a4d28;border-top-color:#a8793f;border-radius:8px 8px 14px 14px;box-shadow:inset 0 6px 10px rgba(0,0,0,.85),0 3px 6px rgba(0,0,0,.4)}
+  .tc{position:relative;width:14px;height:var(--h,34px);margin-top:auto;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.55) 0 1px,transparent 1px 5px),linear-gradient(90deg,rgba(0,0,0,.4),transparent 28%,rgba(255,255,255,.28) 50%,transparent 72%,rgba(0,0,0,.4)),repeating-linear-gradient(0deg,var(--c) 0 3px,#f2f2f2 3px 4px,var(--c) 4px 5px)}
+  .tc::before{content:"";position:absolute;left:-1px;right:-1px;top:-3px;height:7px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.35),transparent 70%),var(--c);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+  /* --- speelkaarten --- */
+  .pc{position:relative;flex:none;width:62px;height:90px;margin-right:-34px;border-radius:6px;font-size:14px;color:#16132e;
+    background:linear-gradient(160deg,#fff 0%,#f3f3f7 60%,#e4e4ec 100%);box-shadow:0 3px 8px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.28)}
+  .pc:last-child{margin-right:0}
+  .pc.red{color:#c8102e}
+  .pc .ix{position:absolute;display:flex;flex-direction:column;align-items:center;line-height:.95;font-weight:800}
+  .pc .ix b{font-size:1.05em;letter-spacing:-.08em;font-family:Georgia,'Times New Roman',serif}
+  .pc .ix i{font-style:normal;font-size:1em}
+  .pc .tl{left:.3em;top:.25em}
+  .pc .br{right:.3em;bottom:.25em;transform:rotate(180deg)}
+  .pc .pips{position:absolute;left:34%;right:34%;top:18%;bottom:18%}
+  .pc .pip{position:absolute;font-style:normal;font-size:1.05em;line-height:1;transform:translate(-50%,-50%)}
+  .pc .pip.dn{transform:translate(-50%,-50%) rotate(180deg)}
+  .pc .pip.ace{font-size:2.5em}
+  .pc .court{position:absolute;left:22%;right:22%;top:15%;bottom:15%;border:1.5px solid currentColor;border-radius:3px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,rgba(255,200,61,.35),rgba(255,255,255,.2) 50%,rgba(255,200,61,.35));overflow:hidden}
+  .pc .court b{font-size:2.5em;line-height:1;font-weight:400}
+  .pc .court i{position:absolute;font-style:normal;font-size:.9em}
+  .pc .court i.a{left:.15em;top:.05em}.pc .court i.z{right:.15em;bottom:.05em;transform:rotate(180deg)}
+  .pc.back{background:#fff}
+  .pc.back::before{content:"";position:absolute;inset:4px;border-radius:3px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.22) 0 2px,transparent 2px 7px),repeating-linear-gradient(-45deg,rgba(255,255,255,.22) 0 2px,transparent 2px 7px),linear-gradient(160deg,#2563eb,#102a6b)}
+  .pc.back::after{content:"♠";position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.8);font-size:2.2em}
+  .hands.two .pc{width:50px;height:74px;font-size:11.2px;margin-right:-27px}
+  .hands.two .pc:last-child{margin-right:0}
 </style>
 </head>
 <body>
@@ -229,7 +261,7 @@
     <div>
       <div class="felt" id="felt">
         <div class="top">
-          <div class="tray"><div class="tc" style="--c:#e0b020"></div><div class="tc" style="--c:#e0b020"></div><div class="tc" style="--c:#d6204b"></div><div class="tc" style="--c:#d6204b"></div><div class="tc" style="--c:#16a34a"></div><div class="tc" style="--c:#16a34a"></div><div class="tc" style="--c:#222"></div><div class="tc" style="--c:#2a6fdb"></div><div class="tc" style="--c:#7c3aed"></div></div>
+          <div class="tray"><div class="tc" style="--c:#e0b020;--h:40px"></div><div class="tc" style="--c:#e0b020;--h:30px"></div><div class="tc" style="--c:#d6204b;--h:44px"></div><div class="tc" style="--c:#d6204b;--h:34px"></div><div class="tc" style="--c:#16a34a;--h:42px"></div><div class="tc" style="--c:#16a34a;--h:28px"></div><div class="tc" style="--c:#2b2b33;--h:46px"></div><div class="tc" style="--c:#2a6fdb;--h:36px"></div><div class="tc" style="--c:#7c3aed;--h:32px"></div></div>
           <div class="limits">Tafel-<br>limieten<b id="limAmt">€5 – €50</b></div>
           <div class="shoe"></div>
         </div>
@@ -252,7 +284,7 @@
           <div class="grp">
             <button class="rb ghost" id="clr"><span>✕</span>Wissen</button>
             <button class="rb ghost" id="rep"><span>↻</span>Herhaal</button>
-            <button class="rb deal" id="dealBtn"><span>▶</span>Delen</button>
+            <button class="rb go" id="dealBtn"><span>▶</span>Delen</button>
           </div>
         </div>
         <div id="ctlIns" class="hide">
@@ -516,7 +548,16 @@ var E=(function(){
 
   // ---- kaarten en handen ----
   function rk(c){return c.r===1?"A":c.r===11?"J":c.r===12?"Q":c.r===13?"K":String(c.r);}
-  function face(el,c){el.className="pc"+((c.s==="♥"||c.s==="♦")?" red":""); el.innerHTML='<span>'+rk(c)+'</span><span class="st">'+c.s+'</span>';}
+  var PIPS={1:[[.5,.5]],2:[[.5,0],[.5,1]],3:[[.5,0],[.5,.5],[.5,1]],4:[[0,0],[1,0],[0,1],[1,1]],5:[[0,0],[1,0],[.5,.5],[0,1],[1,1]],
+    6:[[0,0],[1,0],[0,.5],[1,.5],[0,1],[1,1]],7:[[0,0],[1,0],[.5,.25],[0,.5],[1,.5],[0,1],[1,1]],8:[[0,0],[1,0],[.5,.25],[0,.5],[1,.5],[.5,.75],[0,1],[1,1]],
+    9:[[0,0],[1,0],[0,.333],[1,.333],[.5,.5],[0,.667],[1,.667],[0,1],[1,1]],10:[[0,0],[1,0],[.5,.1667],[0,.333],[1,.333],[0,.667],[1,.667],[.5,.8333],[0,1],[1,1]]};
+  function face(el,c){
+    el.className="pc"+((c.s==="♥"||c.s==="♦")?" red":"");
+    var r=rk(c), h='<div class="ix tl"><b>'+r+'</b><i>'+c.s+'</i></div><div class="ix br"><b>'+r+'</b><i>'+c.s+'</i></div>';
+    if(c.r>=11){ var g=c.r===13?"\u265A":c.r===12?"\u265B":"\u265E"; h+='<div class="court"><i class="a">'+c.s+'</i><b>'+g+'\uFE0E</b><i class="z">'+c.s+'</i></div>'; }
+    else { h+='<div class="pips">'; PIPS[c.r].forEach(function(p){ h+='<i class="pip'+(c.r===1?' ace':(p[1]>.5?' dn':''))+'" style="left:'+(p[0]*100)+'%;top:'+(p[1]*100)+'%">'+c.s+'</i>'; }); h+='</div>'; }
+    el.innerHTML=h;
+  }
   function addCard(h,c,anim){var d=document.createElement("div"); face(d,c); if(anim)d.classList.add("deal"); h.row.appendChild(d); return d;}
   function buildHands(){
     var box=$("ph"); box.innerHTML=""; box.className="hands"+(hands.length>1?" two":"");
@@ -546,7 +587,7 @@ var E=(function(){
     var st=$("stack"); st.className="stack"+(cls?" "+cls:""); st.innerHTML=""; var rem=amount, list=[];
     DEN.forEach(function(d){while(rem>=d&&list.length<7){list.push(d);rem-=d;}});
     if(!list.length&&amount>0)list.push(5);
-    list.forEach(function(d,i){var c=document.createElement("div");c.className="ch ch"+d;c.style.bottom=(i*4)+"px";c.style.setProperty("--i",i);st.appendChild(c);});
+    list.forEach(function(d,i){var c=document.createElement("div");c.className="ch ch"+d;c.style.bottom=(i*5)+"px";c.style.setProperty("--i",i);st.appendChild(c);});
     $("spotAmt").textContent=amount?num(amount):"";
   }
   function stakes(){var s=0;hands.forEach(function(h){s+=h.stake});return s;}
@@ -560,7 +601,7 @@ var E=(function(){
     $("felt").className="felt"+(t.vip?" vipf":"");
     var ch=$("chips"); ch.innerHTML="";
     t.chips.forEach(function(v){
-      var b=document.createElement("button"); b.className="chip c"+v; b.textContent=v; b.disabled=(bet+v>max);
+      var b=document.createElement("button"); b.className="chip c"+v; b.innerHTML="<span>"+v+"</span>"; b.disabled=(bet+v>max);
       b.onclick=function(){ if(busy||phase!=="bet")return; if(bet+v<=max){bet+=v; sfx.chip(); renderBet();} };
       ch.appendChild(b);
     });
