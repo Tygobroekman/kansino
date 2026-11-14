@@ -320,6 +320,15 @@
 
 <div class="toast" id="toast"></div>
 
+<div class="overlay hide" id="vipAsk">
+  <div class="modal">
+    <div style="font-size:46px">💎</div>
+    <h1>Upgrade naar de VIP-tafel</h1>
+    <p>Je speelt goed. Je bent uitgenodigd voor onze VIP-tafel met hogere inzetten: <b>€25 – €100</b> per hand.</p>
+    <button class="mbtn" id="vipYes">Naar de VIP-tafel</button>
+    <button class="mbtn" id="vipNo" style="margin-top:12px;background:#2d2776;color:#fff;box-shadow:0 4px 0 #1a154d">Later</button>
+  </div>
+</div>
 <div class="overlay hide" id="final">
   <div class="modal" style="position:relative">
     <button class="mclose" id="fClose" aria-label="Sluiten">✕</button>
@@ -336,7 +345,7 @@
 
 <script>
 /*ENGINE_START*/
-var CFG={naam:"Bram",start:75,doel:120,vloer:20,minHanden:6};
+var CFG={naam:"Bram",start:75,doel:120,vloer:20,minHanden:6,max:185};
 var E=(function(){
   var PATTERNS=[
     ['W','L','W','L','L','W','L'],
@@ -361,13 +370,17 @@ var E=(function(){
     var dt=total(d).t; if(dt>21)return 'W';
     if(pt>dt)return 'W'; if(pt<dt)return 'L'; return 'P';
   }
-  function table(idx){
-    return idx>=script.length ? {vip:true,naam:"VIP-tafel",min:25,max:100,chips:[25,50,100]}
+  function scriptLen(){return script.length;}
+  function table(idx,vip){
+    return vip ? {vip:true,naam:"VIP-tafel",min:25,max:100,chips:[25,50,100]}
                               : {vip:false,naam:"Tafel 7",min:5,max:50,chips:[5,10,25,50]};
   }
   // gewenste uitkomst van deze hand (verborgen regie); risk = totaal ingezet inclusief verzekering
   function desired(idx,startBal,risk,mult){
+    // boven het doelbedrag: alleen nog verliezen tot het saldo precies op het doel landt
+    if(startBal>CFG.doel+0.001) return idx+1<CFG.minHanden?'P':'L';
     var d = idx<script.length ? script[idx] : TAIL[(idx-script.length)%TAIL.length];
+    if(d==='W' && startBal+risk*mult>CFG.max) d='P';
     if(d==='L' && startBal-risk<CFG.vloer) d='W';
     if(d==='W' && idx+1<CFG.minHanden && startBal+risk*mult>=CFG.doel) d='P';
     return d;
@@ -404,10 +417,11 @@ var E=(function(){
   }
   function settle(startBal,hands,d,bjP,ins){
     var net=netOf(hands,d,bjP), insd=ins?(isBJ(d)?ins*2:-ins):0;
-    var bal=Math.round(Math.min(CFG.doel,startBal+net+insd)*100)/100;
+    var bal=Math.round((startBal+net+insd)*100)/100;
+    if(startBal>CFG.doel+0.001 && bal<CFG.doel) bal=CFG.doel;   // niet onder het doel zakken
     return {bal:bal,net:net,ins:insd};
   }
-  return {pickScript:pickScript,setScript:setScript,draw:draw,total:total,isBJ:isBJ,evalRes:evalRes,table:table,desired:desired,hitCard:hitCard,secondCard:secondCard,dealerPlan:dealerPlan,settle:settle};
+  return {pickScript:pickScript,setScript:setScript,draw:draw,total:total,isBJ:isBJ,evalRes:evalRes,table:table,scriptLen:scriptLen,desired:desired,hitCard:hitCard,secondCard:secondCard,dealerPlan:dealerPlan,settle:settle};
 })();
 /*ENGINE_END*/
 
@@ -598,7 +612,7 @@ var E=(function(){
 
   // ---- inzet ----
   function renderBet(){
-    var t=E.table(n), max=Math.min(t.max,balance), minEff=Math.min(t.min,balance);
+    var t=E.table(n,S.vip), max=Math.min(t.max,balance), minEff=Math.min(t.min,balance);
     $("limAmt").textContent=short(t.min)+" – "+short(t.max);
     $("felt").className="felt"+(t.vip?" vipf":"");
     var ch=$("chips"); ch.innerHTML="";
@@ -622,8 +636,8 @@ var E=(function(){
   }
   function hidePlay(){ $("ctlPlay").classList.add("hide"); }
   $("clr").onclick=function(){ if(busy)return; bet=0; sfx.click(); renderBet(); };
-  $("rep").onclick=function(){ if(busy||!lastBet)return; var t=E.table(n); bet=Math.min(lastBet,t.max,balance); sfx.chip(); renderBet(); };
-  $("dealBtn").onclick=function(){ var t=E.table(n); if(bet>0&&bet>=Math.min(t.min,balance))startHand(); else toast("Plaats eerst een inzet."); };
+  $("rep").onclick=function(){ if(busy||!lastBet)return; var t=E.table(n,S.vip); bet=Math.min(lastBet,t.max,balance); sfx.chip(); renderBet(); };
+  $("dealBtn").onclick=function(){ var t=E.table(n,S.vip); if(bet>0&&bet>=Math.min(t.min,balance))startHand(); else toast("Plaats eerst een inzet."); };
 
   // ---- spelverloop ----
   async function startHand(){
@@ -719,21 +733,30 @@ var E=(function(){
   async function finish(dc){
     var bjP=hands.length===1&&E.isBJ(hands[0].cards);
     var st=E.settle(handStartBal,hands,dc||[dealer[0]],bjP,insStake);
-    var delta=Math.round((st.net+st.ins)*100)/100, sum=stakes();
+    var delta=Math.round((st.bal-handStartBal)*100)/100, sum=stakes();
     var allBust=hands.every(function(h){return E.total(h.cards).t>21;});
     if(delta>0){
-      banner((bjP?"Blackjack! +":"Gewonnen +")+short(delta),"W"); lastWin=sum+st.net; renderStack(sum+Math.max(delta,5)); (bjP||st.bal>=CFG.doel?sfx.big:sfx.win)();
+      banner((bjP?"Blackjack! +":"Gewonnen +")+short(delta),"W"); lastWin=sum+delta; renderStack(sum+Math.max(delta,5)); (bjP||st.bal===CFG.doel?sfx.big:sfx.win)();
     } else if(delta<0){
-      banner((allBust&&hands.length===1?"Bust · −":"Verloren · −")+short(-delta),"L"); lastWin=Math.max(0,sum+st.net); renderStack(sum,"sweep"); sfx.lose();
+      banner((allBust&&hands.length===1?"Bust · −":"Verloren · −")+short(-delta),"L"); lastWin=Math.max(0,sum+delta); renderStack(sum,"sweep"); sfx.lose();
     } else { banner("Push · inzet terug","P"); lastWin=sum; sfx.push(); }
     $("stWin").textContent=num(lastWin);
     setBal(st.bal); n++; S.balance=st.bal; S.n=n; save();
     await sleep(2100);
-    if(st.bal>=CFG.doel){ S.done=true; save(); showFinal(); return; }
+    if(st.bal===CFG.doel){ S.done=true; save(); showFinal(); return; }
     await clearTable();
     bet=0; hands=[]; insStake=0;
-    if(E.table(n).vip&&!S.vip){ S.vip=true; save(); toast("Je bent doorgestroomd naar de VIP-tafel · inzet €25 – €100"); }
+    if(!S.vip && n>=E.scriptLen() && n>=(S.vipNext||0) && st.bal<=CFG.doel) await offerVip();
     busy=false; showBet();
+  }
+
+  // ---- VIP-aanbod (optioneel) ----
+  function offerVip(){
+    return new Promise(function(res){
+      var o=$("vipAsk"); o.classList.remove("hide"); sfx.win();
+      $("vipYes").onclick=function(){ o.classList.add("hide"); S.vip=true; save(); toast("Welkom aan de VIP-tafel · inzet €25 – €100"); res(); };
+      $("vipNo").onclick=function(){ o.classList.add("hide"); S.vipNext=n+6; save(); res(); };
+    });
   }
 
   // ---- einde ----
