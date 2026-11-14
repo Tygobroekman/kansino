@@ -345,7 +345,7 @@
 
 <script>
 /*ENGINE_START*/
-var CFG={naam:"Bram",start:75,doel:120,vloer:20,minHanden:6,max:185};
+var CFG={naam:"Bram",start:75,doel:120,vloer:20,minHanden:6,over:5};
 var E=(function(){
   var PATTERNS=[
     ['W','L','W','L','L','W','L'],
@@ -380,7 +380,6 @@ var E=(function(){
     // boven het doelbedrag: alleen nog verliezen tot het saldo precies op het doel landt
     if(startBal>CFG.doel+0.001) return idx+1<CFG.minHanden?'P':'L';
     var d = idx<script.length ? script[idx] : TAIL[(idx-script.length)%TAIL.length];
-    if(d==='W' && startBal+risk*mult>CFG.max) d='P';
     if(d==='L' && startBal-risk<CFG.vloer) d='W';
     if(d==='W' && idx+1<CFG.minHanden && startBal+risk*mult>=CFG.doel) d='P';
     return d;
@@ -415,9 +414,11 @@ var E=(function(){
     for(var i=0;i<order.length;i++){var c=find(up,hands,bjP,order[i],1200); if(c)return c;}
     return sim(up);
   }
-  function settle(startBal,hands,d,bjP,ins){
+  function settle(startBal,hands,d,bjP,ins,idx){
     var net=netOf(hands,d,bjP), insd=ins?(isBJ(d)?ins*2:-ins):0;
     var bal=Math.round((startBal+net+insd)*100)/100;
+    // ver over het doel: afkappen op het doel (einde), maar niet vóór de minimale speelduur
+    if(bal>CFG.doel+CFG.over && !(idx!==undefined && idx+1<CFG.minHanden)) bal=CFG.doel;
     if(startBal>CFG.doel+0.001 && bal<CFG.doel) bal=CFG.doel;   // niet onder het doel zakken
     return {bal:bal,net:net,ins:insd};
   }
@@ -732,7 +733,7 @@ var E=(function(){
   }
   async function finish(dc){
     var bjP=hands.length===1&&E.isBJ(hands[0].cards);
-    var st=E.settle(handStartBal,hands,dc||[dealer[0]],bjP,insStake);
+    var st=E.settle(handStartBal,hands,dc||[dealer[0]],bjP,insStake,n);
     var delta=Math.round((st.bal-handStartBal)*100)/100, sum=stakes();
     var allBust=hands.every(function(h){return E.total(h.cards).t>21;});
     if(delta>0){
