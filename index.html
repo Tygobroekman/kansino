@@ -884,13 +884,29 @@ var E=(function(){
   var RCH=[1,5,10,25,50], rchip=5, rbets={}, rstack=[], rlast=null, rWinAmt=0, rwheel=0, rcells={};
   if(!S.rhist)S.rhist=[];
   var wc=$("wheel"), wx=wc.getContext("2d");
+  var wImg=new Image(), wImgOk=false, WTRACK=.9, WPOCK=.7;
+  wImg.onload=function(){ wImgOk=true; WTRACK=.85; WPOCK=.655; if(wc._s)drawWheel(wc._rot!=null?wc._rot:rwheel,wc._b,wc._br); };
+  wImg.src="wheel.png";
   function sizeWheel(){
     var s=Math.min(300,Math.floor(Math.min(innerWidth,520)*.78)), d=window.devicePixelRatio||1;
     wc.style.width=s+"px"; wc.style.height=s+"px"; wc.width=Math.round(s*d); wc.height=Math.round(s*d); wx.setTransform(d,0,0,d,0,0); wc._s=s;
   }
   function drawWheel(rot,bAng,bRad){
     var s=wc._s, c=s/2, R=c-4, a=2*Math.PI/37, W=E.WHEEL, i;
+    wc._rot=rot; wc._b=bAng; wc._br=bRad;
     wx.clearRect(0,0,s,s);
+    if(wImgOk){
+      // foto-bord: houten rand blijft staan, de pocketring met getallen draait mee
+      wx.drawImage(wImg,0,0,s,s);
+      wx.save(); wx.translate(c,c); wx.rotate(rot); wx.beginPath(); wx.arc(0,0,c*.762,0,7); wx.clip(); wx.drawImage(wImg,-c,-c,s,s); wx.restore();
+      if(bAng!=null){
+        var ir=c*bRad, ix=c+Math.cos(bAng)*ir, iy=c+Math.sin(bAng)*ir, rr=Math.max(4,s/52);
+        wx.beginPath(); wx.arc(ix+1,iy+2,rr,0,7); wx.fillStyle="rgba(0,0,0,.4)"; wx.fill();
+        var ig=wx.createRadialGradient(ix-rr/3,iy-rr/3,0,ix,iy,rr); ig.addColorStop(0,"#fff"); ig.addColorStop(1,"#bfc3cc");
+        wx.beginPath(); wx.arc(ix,iy,rr,0,7); wx.fillStyle=ig; wx.fill();
+      }
+      return;
+    }
     var g=wx.createRadialGradient(c,c,R*.7,c,c,R); g.addColorStop(0,"#6b3a1c"); g.addColorStop(1,"#3a1d0c");
     wx.beginPath(); wx.arc(c,c,R,0,7); wx.fillStyle=g; wx.fill();
     wx.beginPath(); wx.arc(c,c,R-7,0,7); wx.fillStyle="#1b0f08"; wx.fill();
@@ -976,12 +992,12 @@ var E=(function(){
       var p=Math.max(0,Math.min(1,(performance.now()-t0)/dur));
       var rot=w0+dW*ease2(p), ang=bf+Math.PI*2*turns*(1-ease3(p));
       var q=Math.max(0,Math.min(1,(p-.62)/.38)), sm=q*q*(3-2*q);
-      var rad=.9+(.7-.9)*sm+Math.sin(q*Math.PI*3)*(1-q)*.025;
+      var rad=WTRACK+(WPOCK-WTRACK)*sm+Math.sin(q*Math.PI*3)*(1-q)*.025;
       drawWheel(rot,ang,rad);
       if(p<1)requestAnimationFrame(frame);
     })();
     await sleep(dur+60); done=true;
-    rwheel=wf%(Math.PI*2); drawWheel(wf,bf,.7);
+    rwheel=wf%(Math.PI*2); drawWheel(wf,bf,WPOCK);
   }
   async function spin(){
     var tot=rTotal(); if(busy||tot<=0||tot<rMinBet())return;
@@ -1014,7 +1030,7 @@ var E=(function(){
   function rLeave(){ if(busy){ toast("Wacht tot het rad stilstaat."); return; } view("lobby"); }
   $("rBack").onclick=rLeave; $("rClose").onclick=rLeave;
   $("rSnd").onclick=function(){ S.mute=!S.mute; save(); paintSnd(); if(!S.mute)sfx.click(); };
-  addEventListener("resize",function(){ if(wc._s){ sizeWheel(); drawWheel(rwheel); } });
+  addEventListener("resize",function(){ if(wc._s){ sizeWheel(); drawWheel(wc._rot!=null?wc._rot:rwheel,wc._b,wc._br); } });
   buildRoul();
 
   // ---- einde ----
