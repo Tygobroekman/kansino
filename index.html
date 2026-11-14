@@ -13,6 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
+<link rel="preload" as="image" href="cards.png">
 <style>
   :root{--bg:#0d0a26;--bg2:#15113a;--panel:#1b1648;--line:#2d2776;--pink:#ff3d81;--gold:#ffc83d;--green:#2ee59d;--red:#ff5470;--txt:#eceaff;--mut:#8b86c9;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -192,28 +193,15 @@
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.55) 0 1px,transparent 1px 5px),linear-gradient(90deg,rgba(0,0,0,.4),transparent 28%,rgba(255,255,255,.28) 50%,transparent 72%,rgba(0,0,0,.4)),repeating-linear-gradient(0deg,var(--c) 0 3px,#f2f2f2 3px 4px,var(--c) 4px 5px)}
   .tc::before{content:"";position:absolute;left:-1px;right:-1px;top:-3px;height:7px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.35),transparent 70%),var(--c);box-shadow:0 1px 0 rgba(0,0,0,.4)}
   /* --- speelkaarten --- */
-  .pc{position:relative;flex:none;width:62px;height:90px;margin-right:-34px;border-radius:6px;font-size:14px;color:#16132e;
-    background:linear-gradient(160deg,#fff 0%,#f3f3f7 60%,#e4e4ec 100%);box-shadow:0 3px 8px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.28)}
+  .pc{position:relative;flex:none;width:62px;height:92px;margin-right:-34px;border-radius:4px;background-color:transparent;
+    filter:drop-shadow(0 3px 4px rgba(0,0,0,.55))}
+  .pc.img{background-image:url(cards.png);background-size:1300% 400%;background-repeat:no-repeat}
   .pc:last-child{margin-right:0}
-  .pc.red{color:#c8102e}
-  .pc .ix{position:absolute;display:flex;flex-direction:column;align-items:center;line-height:.95;font-weight:800}
-  .pc .ix b{font-size:1.05em;letter-spacing:-.08em;font-family:Georgia,'Times New Roman',serif}
-  .pc .ix i{font-style:normal;font-size:1em}
-  .pc .tl{left:.3em;top:.25em}
-  .pc .br{right:.3em;bottom:.25em;transform:rotate(180deg)}
-  .pc .pips{position:absolute;left:34%;right:34%;top:18%;bottom:18%}
-  .pc .pip{position:absolute;font-style:normal;font-size:1.05em;line-height:1;transform:translate(-50%,-50%)}
-  .pc .pip.dn{transform:translate(-50%,-50%) rotate(180deg)}
-  .pc .pip.ace{font-size:2.5em}
-  .pc .court{position:absolute;left:22%;right:22%;top:15%;bottom:15%;border:1.5px solid currentColor;border-radius:3px;display:flex;align-items:center;justify-content:center;
     background:linear-gradient(135deg,rgba(255,200,61,.35),rgba(255,255,255,.2) 50%,rgba(255,200,61,.35));overflow:hidden}
-  .pc .court b{font-size:2.5em;line-height:1;font-weight:400}
-  .pc .court i{position:absolute;font-style:normal;font-size:.9em}
-  .pc .court i.a{left:.15em;top:.05em}.pc .court i.z{right:.15em;bottom:.05em;transform:rotate(180deg)}
   .pc.back{background:#fff}
   .pc.back::before{content:"";position:absolute;inset:4px;border-radius:3px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.22) 0 2px,transparent 2px 7px),repeating-linear-gradient(-45deg,rgba(255,255,255,.22) 0 2px,transparent 2px 7px),linear-gradient(160deg,#2563eb,#102a6b)}
   .pc.back::after{content:"♠";position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.8);font-size:2.2em}
-  .hands.two .pc{width:50px;height:74px;font-size:11.2px;margin-right:-27px}
+  .hands.two .pc{width:50px;height:75px;margin-right:-27px}
   .hands.two .pc:last-child{margin-right:0}
 </style>
 </head>
@@ -548,15 +536,10 @@ var E=(function(){
 
   // ---- kaarten en handen ----
   function rk(c){return c.r===1?"A":c.r===11?"J":c.r===12?"Q":c.r===13?"K":String(c.r);}
-  var PIPS={1:[[.5,.5]],2:[[.5,0],[.5,1]],3:[[.5,0],[.5,.5],[.5,1]],4:[[0,0],[1,0],[0,1],[1,1]],5:[[0,0],[1,0],[.5,.5],[0,1],[1,1]],
-    6:[[0,0],[1,0],[0,.5],[1,.5],[0,1],[1,1]],7:[[0,0],[1,0],[.5,.25],[0,.5],[1,.5],[0,1],[1,1]],8:[[0,0],[1,0],[.5,.25],[0,.5],[1,.5],[.5,.75],[0,1],[1,1]],
-    9:[[0,0],[1,0],[0,.333],[1,.333],[.5,.5],[0,.667],[1,.667],[0,1],[1,1]],10:[[0,0],[1,0],[.5,.1667],[0,.333],[1,.333],[0,.667],[1,.667],[.5,.8333],[0,1],[1,1]]};
+  var ROW={"\u2660":0,"\u2665":1,"\u2666":2,"\u2663":3};
   function face(el,c){
-    el.className="pc"+((c.s==="♥"||c.s==="♦")?" red":"");
-    var r=rk(c), h='<div class="ix tl"><b>'+r+'</b><i>'+c.s+'</i></div><div class="ix br"><b>'+r+'</b><i>'+c.s+'</i></div>';
-    if(c.r>=11){ var g=c.r===13?"\u265A":c.r===12?"\u265B":"\u265E"; h+='<div class="court"><i class="a">'+c.s+'</i><b>'+g+'\uFE0E</b><i class="z">'+c.s+'</i></div>'; }
-    else { h+='<div class="pips">'; PIPS[c.r].forEach(function(p){ h+='<i class="pip'+(c.r===1?' ace':(p[1]>.5?' dn':''))+'" style="left:'+(p[0]*100)+'%;top:'+(p[1]*100)+'%">'+c.s+'</i>'; }); h+='</div>'; }
-    el.innerHTML=h;
+    el.className="pc img"; el.innerHTML="";
+    el.style.backgroundPosition=((c.r-1)/12*100)+"% "+(ROW[c.s]/3*100)+"%";
   }
   function addCard(h,c,anim){var d=document.createElement("div"); face(d,c); if(anim)d.classList.add("deal"); h.row.appendChild(d); return d;}
   function buildHands(){

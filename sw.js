@@ -1,6 +1,6 @@
 // Service worker: netwerk eerst (updates komen direct door), cache als terugval zodat de app ook offline opent.
-var V = 'kansino-v2';
-var FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
+var V = 'kansino-v3';
+var FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-180.png', 'icon-192.png', 'icon-512.png', 'cards.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(V).then(function (c) { return c.addAll(FILES); }));
