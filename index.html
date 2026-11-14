@@ -20,6 +20,9 @@
   html,body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;overscroll-behavior:none;touch-action:manipulation}
   body{min-height:100vh;min-height:100dvh;padding-top:var(--sat);padding-bottom:var(--sab)}
   .hide{display:none!important}
+  .console>div{width:100%}
+  body{overflow-anchor:none}
+  #game,.stage{overflow-x:clip}
   button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
   /* splash + verbinden */
@@ -128,9 +131,9 @@
   .hw{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 8px;border-radius:14px;border:2px solid transparent;transition:all .2s}
   .hw.act{border-color:rgba(255,200,61,.85);background:rgba(0,0,0,.2)}
   .hst{font-size:11px;font-weight:800;color:#ffe9a8;min-height:14px}
-  .hands.two .hand{min-height:80px}
+  .hands.two .hand{min-height:104px}
   .mid{height:64px;display:flex;align-items:center;justify-content:center;position:relative;z-index:3}
-  .banner{font-weight:900;font-size:22px;padding:8px 20px;border-radius:30px;opacity:0;transform:scale(.8);transition:all .25s;box-shadow:0 6px 20px rgba(0,0,0,.45);white-space:nowrap}
+  .banner{font-weight:900;font-size:22px;padding:8px 20px;border-radius:30px;opacity:0;transform:scale(.8);transition:all .25s;box-shadow:0 3px 0 rgba(0,0,0,.28);white-space:nowrap}
   .banner.on{opacity:1;transform:scale(1)}
   .banner.W{background:var(--green);color:#052a1c}.banner.L{background:var(--red);color:#fff}.banner.P{background:#d0cef2;color:#1b1840}
   .spot{position:relative;width:120px;height:62px;border:2px solid rgba(255,255,255,.35);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
@@ -143,7 +146,7 @@
   .flip{animation:flip .35s ease-out}
   @keyframes flip{from{transform:rotateY(90deg)}to{transform:none}}
 
-  .console{margin-top:10px;background:linear-gradient(#2a2a30,#17171b);border:1px solid #3a3a45;border-radius:14px;padding:12px 10px}
+  .console{min-height:176px;display:flex;align-items:center;margin-top:10px;background:linear-gradient(#2a2a30,#17171b);border:1px solid #3a3a45;border-radius:14px;padding:12px 10px}
   .cap{text-align:center;font-size:13px;color:#e8d9a8;margin:0 0 10px;font-weight:600}
   .grp{display:flex;align-items:flex-end;justify-content:center;gap:14px}
   .rb{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;padding:0;font-size:11px;font-weight:700;color:#e8d9a8;letter-spacing:.5px;text-transform:uppercase}
@@ -182,7 +185,7 @@
   .chip:active{transform:translateY(2px);box-shadow:0 2px 0 var(--d),0 4px 8px rgba(0,0,0,.4)}
   .chip[disabled]{opacity:.28}
   /* stapel op de inzetplek (schuin van boven, met dikte) */
-  .stack{position:relative;width:40px;height:44px}
+  .stack{position:relative;width:40px;height:52px}
   .stack .ch{position:absolute;left:0;width:40px;height:22px;border-radius:50%;
     background:radial-gradient(ellipse at 50% 50%,var(--c) 0 52%,rgba(255,255,255,.92) 53% 58%,var(--c) 59% 66%,transparent 67%),repeating-conic-gradient(#f4f4f4 0 12deg,var(--c) 12deg 45deg);
     box-shadow:0 3px 0 var(--d),0 4px 0 rgba(0,0,0,.35),0 6px 6px rgba(0,0,0,.3);
@@ -207,9 +210,9 @@
   /* --- tafel in schuin vooraanzicht --- */
   .stage{perspective:1500px;perspective-origin:50% 40%;margin-top:-30px;padding:0}
   .felt .top,.felt .area,.felt .hands,.felt .hw,.felt .hand,.felt .mid,.felt .spot{transform-style:preserve-3d}
-  .felt .tray,.felt .limits,.felt .who,.felt .tag,.felt .stack{transform:rotateX(var(--untilt));transform-origin:50% 100%}
-  .felt .banner{transform:rotateX(var(--untilt)) scale(.8);transform-origin:50% 100%}
-  .felt .banner.on{transform:rotateX(var(--untilt)) scale(1)}
+  .felt .tray,.felt .limits,.felt .who,.felt .tag,.felt .stack{transform:translateZ(8px) rotateX(var(--untilt));transform-origin:50% 100%}
+  .felt .banner{transform:translateZ(8px) rotateX(var(--untilt)) scale(.8);transform-origin:50% 100%}
+  .felt .banner.on{transform:translateZ(8px) rotateX(var(--untilt)) scale(1)}
   /* opruimen na het potje */
   .pc.out{animation:cardout .55s ease-in forwards;animation-delay:calc(var(--k,0)*55ms)}
   @keyframes cardout{to{transform:translate(160px,-190px) rotate(28deg) scale(.7);opacity:0}}
@@ -583,7 +586,7 @@ var E=(function(){
     var st=$("stack"); st.className="stack"+(cls?" "+cls:""); st.innerHTML=""; var rem=amount, list=[];
     DEN.forEach(function(d){while(rem>=d&&list.length<7){list.push(d);rem-=d;}});
     if(!list.length&&amount>0)list.push(5);
-    list.forEach(function(d,i){var c=document.createElement("div");c.className="ch ch"+d;c.style.bottom=(i*5)+"px";c.style.setProperty("--i",i);st.appendChild(c);});
+    list.forEach(function(d,i){var c=document.createElement("div");c.className="ch ch"+d;c.style.bottom=(8+i*5)+"px";c.style.setProperty("--i",i);st.appendChild(c);});
     $("spotAmt").textContent=amount?num(amount):"";
   }
   function stakes(){var s=0;hands.forEach(function(h){s+=h.stake});return s;}
